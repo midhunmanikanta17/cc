@@ -1,0 +1,56 @@
+public class AESAlgorithm {
+
+    public static void main(String[] args) {
+
+        String plaintext = "HELLO";
+        String key = "KEY";
+
+        int[] encrypted = encrypt(plaintext, key);
+
+        String decrypted = decrypt(encrypted, key);
+
+        System.out.println("Plain Text : " + plaintext);
+        System.out.println("Key        : " + key);
+
+        System.out.print("Encrypted  : ");
+
+        for (int i = 0; i < encrypted.length; i++) {
+            System.out.print(encrypted[i] + " ");
+        }
+
+        System.out.println();
+
+        System.out.println("Decrypted  : " + decrypted);
+    }
+
+    static int[] encrypt(String text, String key) {
+
+        int[] result = new int[text.length()];
+
+        for (int i = 0; i < text.length(); i++) {
+
+            char t = text.charAt(i);
+            char k = key.charAt(i % key.length());
+
+            result[i] = t ^ k;
+        }
+
+        return result;
+    }
+
+    static String decrypt(int[] text, String key) {
+
+        String result = "";
+
+        for (int i = 0; i < text.length; i++) {
+
+            char k = key.charAt(i % key.length());
+
+            char d = (char)(text[i] ^ k);
+
+            result += d;
+        }
+
+        return result;
+    }
+}

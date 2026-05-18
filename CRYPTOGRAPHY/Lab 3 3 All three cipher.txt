@@ -1,0 +1,139 @@
+public class CryptoAlgorithms {
+
+    public static void main(String[] args) {
+
+        CeaserCipher c = new CeaserCipher();
+
+        String text1 = "HELLO";
+        int shift = 3;
+
+        String enc1 = c.encrypt(text1, shift);
+        String dec1 = c.decrypt(enc1, shift);
+
+        System.out.println("Ceaser Cipher");
+        System.out.println("Original  : " + text1);
+        System.out.println("Encrypted : " + enc1);
+        System.out.println("Decrypted : " + dec1);
+
+
+        SubstitutionCipher s = new SubstitutionCipher();
+
+        String text2 = "WORLD";
+
+        String enc2 = s.encrypt(text2);
+        String dec2 = s.decrypt(enc2);
+
+        System.out.println("\nSubstitution Cipher");
+        System.out.println("Original  : " + text2);
+        System.out.println("Encrypted : " + enc2);
+        System.out.println("Decrypted : " + dec2);
+
+
+        HillCipher h = new HillCipher();
+
+        String text3 = "HI";
+
+        String enc3 = h.encrypt(text3);
+        String dec3 = h.decrypt(enc3);
+
+        System.out.println("\nHill Cipher");
+        System.out.println("Original  : " + text3);
+        System.out.println("Encrypted : " + enc3);
+        System.out.println("Decrypted : " + dec3);
+    }
+}
+
+class CeaserCipher {
+
+    String encrypt(String text, int shift) {
+
+        String result = "";
+
+        for (int i = 0; i < text.length(); i++) {
+
+            char ch = text.charAt(i);
+
+            result += (char)((ch - 'A' + shift) % 26 + 'A');
+        }
+
+        return result;
+    }
+
+    String decrypt(String text, int shift) {
+
+        return encrypt(text, 26 - shift);
+    }
+}
+
+class SubstitutionCipher {
+
+    String a = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    String b = "QWERTYUIOPASDFGHJKLZXCVBNM";
+
+    String encrypt(String text) {
+
+        String result = "";
+
+        for (int i = 0; i < text.length(); i++) {
+
+            char ch = text.charAt(i);
+
+            int index = a.indexOf(ch);
+
+            result += b.charAt(index);
+        }
+
+        return result;
+    }
+
+    String decrypt(String text) {
+
+        String result = "";
+
+        for (int i = 0; i < text.length(); i++) {
+
+            char ch = text.charAt(i);
+
+            int index = b.indexOf(ch);
+
+            result += a.charAt(index);
+        }
+
+        return result;
+    }
+}
+
+class HillCipher {
+
+    int[][] key = {
+            {3, 3},
+            {2, 5}
+    };
+
+    int[][] inverse = {
+            {15, 17},
+            {20, 9}
+    };
+
+    String encrypt(String text) {
+
+        int a = text.charAt(0) - 'A';
+        int b = text.charAt(1) - 'A';
+
+        int x = (key[0][0] * a + key[0][1] * b) % 26;
+        int y = (key[1][0] * a + key[1][1] * b) % 26;
+
+        return "" + (char)(x + 'A') + (char)(y + 'A');
+    }
+
+    String decrypt(String text) {
+
+        int a = text.charAt(0) - 'A';
+        int b = text.charAt(1) - 'A';
+
+        int x = (inverse[0][0] * a + inverse[0][1] * b) % 26;
+        int y = (inverse[1][0] * a + inverse[1][1] * b) % 26;
+
+        return "" + (char)(x + 'A') + (char)(y + 'A');
+    }
+}

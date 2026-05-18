@@ -1,0 +1,26 @@
+public class SHA1Example {
+
+    public static void main(String[] args) {
+
+        String text = "HELLO";
+
+        int hash = sha1(text);
+
+        System.out.println("Text : " + text);
+        System.out.println("SHA-1 Digest : " + hash);
+    }
+
+    static int sha1(String text) {
+
+        int hash = 0;
+
+        for (int i = 0; i < text.length(); i++) {
+
+            hash = hash + text.charAt(i);
+
+            hash = hash * 31;
+        }
+
+        return hash;
+    }
+}

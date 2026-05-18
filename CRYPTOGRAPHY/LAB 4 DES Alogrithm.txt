@@ -1,0 +1,70 @@
+public class DESAlgorithm {
+
+    public static void main(String[] args) {
+
+        String plaintext = "10101010";
+        String key = "11001100";
+
+        String encrypted = encrypt(plaintext, key);
+        String decrypted = decrypt(encrypted, key);
+
+        System.out.println("Plain Text : " + plaintext);
+        System.out.println("Key        : " + key);
+        System.out.println("Encrypted  : " + encrypted);
+        System.out.println("Decrypted  : " + decrypted);
+    }
+
+    static String encrypt(String text, String key) {
+
+        String left = "";
+        String right = "";
+
+        for (int i = 0; i < 4; i++) {
+            left += text.charAt(i);
+        }
+
+        for (int i = 4; i < 8; i++) {
+            right += text.charAt(i);
+        }
+
+        String xor1 = xor(right, key.substring(0, 4));
+        String newRight = xor(left, xor1);
+
+        return right + newRight;
+    }
+
+    static String decrypt(String text, String key) {
+
+        String left = "";
+        String right = "";
+
+        for (int i = 0; i < 4; i++) {
+            left += text.charAt(i);
+        }
+
+        for (int i = 4; i < 8; i++) {
+            right += text.charAt(i);
+        }
+
+        String xor1 = xor(left, key.substring(0, 4));
+        String newLeft = xor(right, xor1);
+
+        return newLeft + left;
+    }
+
+    static String xor(String a, String b) {
+
+        String result = "";
+
+        for (int i = 0; i < a.length(); i++) {
+
+            if (a.charAt(i) == b.charAt(i)) {
+                result += "0";
+            } else {
+                result += "1";
+            }
+        }
+
+        return result;
+    }
+}
